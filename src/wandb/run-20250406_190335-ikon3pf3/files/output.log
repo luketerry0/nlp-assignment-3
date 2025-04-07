@@ -1,0 +1,35 @@
+/home/luketerry0/mambaforge/envs/cs5293-3/lib/python3.10/site-packages/torch/nn/modules/rnn.py:123: UserWarning: dropout option adds dropout after all but last recurrent layer, so non-zero dropout expects num_layers greater than 1, but got dropout=0.5 and num_layers=1
+  warnings.warn(
+  0%|                                                                                                        | 0/5 [00:14<?, ?it/s]
+Traceback (most recent call last):
+  File "/home/luketerry0/Documents/Classes/Text Analytics/assignment_3-1/assignment_3/src/./run_lstm.py", line 32, in <module>
+    classifier.train()
+  File "/home/luketerry0/Documents/Classes/Text Analytics/assignment_3-1/assignment_3/src/src.py", line 156, in train
+    for i, batch_data in enumerate(self.dataloader):
+  File "/home/luketerry0/mambaforge/envs/cs5293-3/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 708, in __next__
+    data = self._next_data()
+  File "/home/luketerry0/mambaforge/envs/cs5293-3/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 764, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+  File "/home/luketerry0/mambaforge/envs/cs5293-3/lib/python3.10/site-packages/torch/utils/data/_utils/fetch.py", line 52, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "/home/luketerry0/mambaforge/envs/cs5293-3/lib/python3.10/site-packages/torch/utils/data/_utils/fetch.py", line 52, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "/home/luketerry0/Documents/Classes/Text Analytics/assignment_3-1/assignment_3/src/src.py", line 40, in __getitem__
+    if word in self.vocabulary:
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "/home/luketerry0/Documents/Classes/Text Analytics/assignment_3-1/assignment_3/src/./run_lstm.py", line 32, in <module>
+    classifier.train()
+  File "/home/luketerry0/Documents/Classes/Text Analytics/assignment_3-1/assignment_3/src/src.py", line 156, in train
+    for i, batch_data in enumerate(self.dataloader):
+  File "/home/luketerry0/mambaforge/envs/cs5293-3/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 708, in __next__
+    data = self._next_data()
+  File "/home/luketerry0/mambaforge/envs/cs5293-3/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 764, in _next_data
+    data = self._dataset_fetcher.fetch(index)  # may raise StopIteration
+  File "/home/luketerry0/mambaforge/envs/cs5293-3/lib/python3.10/site-packages/torch/utils/data/_utils/fetch.py", line 52, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "/home/luketerry0/mambaforge/envs/cs5293-3/lib/python3.10/site-packages/torch/utils/data/_utils/fetch.py", line 52, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "/home/luketerry0/Documents/Classes/Text Analytics/assignment_3-1/assignment_3/src/src.py", line 40, in __getitem__
+    if word in self.vocabulary:
+KeyboardInterrupt

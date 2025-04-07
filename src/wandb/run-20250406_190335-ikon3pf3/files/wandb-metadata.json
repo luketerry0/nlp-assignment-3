@@ -1,0 +1,36 @@
+{
+  "os": "Linux-6.10.10-surface-1-x86_64-with-glibc2.36",
+  "python": "CPython 3.10.16",
+  "startedAt": "2025-04-07T00:03:35.194301Z",
+  "args": [
+    "--hidden_dim=10",
+    "--dropout=0.5",
+    "--epochs=5"
+  ],
+  "program": "/home/luketerry0/Documents/Classes/Text Analytics/assignment_3-1/assignment_3/src/./run_lstm.py",
+  "codePath": "Text Analytics/assignment_3-1/assignment_3/src/run_lstm.py",
+  "git": {
+    "remote": "git@github.com:luketerry0/class-notes.git",
+    "commit": "2fa4b17de0862cd7d274c5146c730a7b5bebc96c"
+  },
+  "email": "luke.terry0682@gmail.com",
+  "root": "/home/luketerry0/Documents/Classes/Text Analytics/assignment_3-1/assignment_3/src",
+  "host": "surface",
+  "executable": "/home/luketerry0/mambaforge/envs/cs5293-3/bin/python",
+  "codePathLocal": "run_lstm.py",
+  "cpu_count": 4,
+  "cpu_count_logical": 8,
+  "disk": {
+    "/": {
+      "total": "249365385216",
+      "used": "194952589312"
+    }
+  },
+  "memory": {
+    "total": "16347832320"
+  },
+  "cpu": {
+    "count": 4,
+    "countLogical": 8
+  }
+}
