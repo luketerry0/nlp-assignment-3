@@ -12,6 +12,8 @@ from transformers import AutoTokenizer, DataCollatorWithPadding
 import evaluate
 import wandb
 from sklearn.metrics import classification_report, confusion_matrix
+from transformers import TrainingArguments
+
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
@@ -178,7 +180,7 @@ class LSTM_Sentiment_Classifier(nn.Module):
 
 # code for 2.2 -=-=-
 
-def bert_model(ds):
+def bert_model(ds, training_params):
     tokenizer = AutoTokenizer.from_pretrained("distilbert/distilbert-base-uncased")
     
     def preprocess_function(examples):
@@ -188,6 +190,7 @@ def bert_model(ds):
     data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
 
     accuracy = evaluate.load("accuracy")
+    f1_metric = evaluate.load("f1")
 
     import numpy as np
 
@@ -195,31 +198,23 @@ def bert_model(ds):
     def compute_metrics(eval_pred):
         predictions, labels = eval_pred
         predictions = np.argmax(predictions, axis=1)
-        return accuracy.compute(predictions=predictions, references=labels)
+        acc = accuracy.compute(predictions=predictions, references=labels)
+        f1 = f1_metric.compute(predictions=predictions, references=labels)
+        wandb.log(data=acc, step=acc['epoch'])
+        wandb.log(data=f1, step=acc['epoch'])
+        return acc
 
     from transformers import AutoModelForSequenceClassification, TrainingArguments, Trainer
 
     model = AutoModelForSequenceClassification.from_pretrained(
         "distilbert/distilbert-base-uncased", num_labels=5)
-
-    training_args = TrainingArguments(
-        output_dir="my_awesome_model",
-        learning_rate=2e-5,
-        per_device_train_batch_size=16,
-        per_device_eval_batch_size=16,
-        num_train_epochs=2,
-        weight_decay=0.01,
-        eval_strategy="epoch",
-        save_strategy="epoch",
-        load_best_model_at_end=True,
-        push_to_hub=False,
-    )
+    
 
     trainer = Trainer(
         model=model,
-        args=training_args,
-        train_dataset=tokenized_dataset["train"],
-        eval_dataset=tokenized_dataset["test"],
+        args=training_params,
+        train_dataset=tokenized_dataset['train'],
+        eval_dataset=tokenized_dataset['test'],
         processing_class=tokenizer,
         data_collator=data_collator,
         compute_metrics=compute_metrics,
@@ -232,15 +227,28 @@ def bert_model(ds):
 if __name__ == "__main__":
     # Load the dataset
     from datasets import load_dataset
-    ds = load_dataset("SetFit/sst5")
+    ds = load_dataset("SetFit/sst5", split='train[10:20]') #, split="train[10:20]")
 
     # classifer = SentimentClassifier(ds, "../data/glove.6B.300d-subset.txt")
     # classifer.run_training_loop(50)
 
-    classifier = LSTM_Sentiment_Classifier(ds, "../data/glove.6B.300d-subset.txt")
-    classifier.train()
+    # classifier = LSTM_Sentiment_Classifier(ds, "../data/glove.6B.300d-subset.txt")
+    # classifier.train()
 
-    # bert = bert_model(ds)
+    training_args = TrainingArguments(
+        output_dir="my_awesome_model",
+        learning_rate=2e-5,
+        per_device_train_batch_size=16,
+        per_device_eval_batch_size=16,
+        num_train_epochs=50,
+        weight_decay=0.01,
+        eval_strategy="epoch",
+        save_strategy="epoch",
+        load_best_model_at_end=True,
+        push_to_hub=False,
+    )
+
+    bert = bert_model(ds, training_args)
 
 
     # test_dataloader = torch.utils.data.DataLoader(MovieReviewsDataset(ds['test'], "../data/glove.6B.300d-subset.txt"))
